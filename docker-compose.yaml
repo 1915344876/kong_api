@@ -4,36 +4,43 @@ services:
 # Kong: The API Gateway
   kong:
     image: kong:2.1.0-ubuntu 
+    container_name: kong
     restart: always
     env_file:
       - kong.env
     ports:
-      - 8000:8000 # 接收处理 http 流量
-      - 8443:8443 # 接收处理 https 流量
+      - 48000:8000 # 接收处理 http 流量
+      - 48443:8443 # 接收处理 https 流量
       #- 8001:8001 # http 管理 API
       #- 8444:8444 # https 管理 API
+    volumes:
+      - '../kong-config:/usr/local/share/lua/5.1'
+      - '../kong-etc:/etc/kong'
+      - './kong-log:/tmp'
     depends_on:
       - postgresql
 
 # Konga: Kong GUI
   konga:
     image: pantsel/konga:0.14.9
+    container_name: konga
     restart: always
     env_file:
       - konga.env
     ports:
-      - 1337:1337
+      - 41337:1337
     depends_on:
       - postgresql
 
 # PostgeSQL Datebase
   postgresql:
     image: postgres:11.2
+    container_name: kong-konga-postgresql
     restart: always
     env_file:
       - postgresql.env
     ports:
-      - 5432:5432
+      - 54324:5432
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
