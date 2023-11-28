@@ -4,7 +4,7 @@ services:
 # Kong: The API Gateway
   kong:
     image: kong:2.1.0-ubuntu 
-    container_name: kong
+    container_name: giikin-kong
     restart: always
     env_file:
       - kong.env
@@ -23,7 +23,7 @@ services:
 # Konga: Kong GUI
   konga:
     image: pantsel/konga:0.14.9
-    container_name: konga
+    container_name: giikin-konga
     restart: always
     env_file:
       - konga.env
@@ -35,7 +35,7 @@ services:
 # PostgeSQL Datebase
   postgresql:
     image: postgres:11.2
-    container_name: kong-konga-postgresql
+    container_name: giikin-postgresql
     restart: always
     env_file:
       - postgresql.env
